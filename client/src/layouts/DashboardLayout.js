@@ -67,14 +67,14 @@ export default function DashboardLayout() {
             </NavLink>
           ))}
         </nav>
-        <div className="bottom-actions" style={{ marginTop: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="bottom-actions">
+          <div className="notification-wrapper">
             <NotificationsDropdown align="top" />
           </div>
-          <button onClick={toggleTheme} className="btn btn-outline" style={{ width: '100%' }}>
+          <button onClick={toggleTheme} className="btn btn-outline flex-btn">
             Theme
           </button>
-          <button onClick={() => { logout(); navigate('/'); }} className="btn btn-outline" style={{ width: '100%' }}>
+          <button onClick={() => logout()} className="btn btn-outline flex-btn">
             Logout
           </button>
         </div>

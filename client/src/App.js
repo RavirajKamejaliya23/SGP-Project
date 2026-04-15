@@ -52,14 +52,13 @@ function App() {
         <Route path="client/*" element={<PrivateRoute allowedRoles={['client']}><ClientDashboard /></PrivateRoute>} />
         <Route path="employee/*" element={<PrivateRoute allowedRoles={['employee']}><EmployeeDashboard /></PrivateRoute>} />
         <Route path="owner/*" element={<PrivateRoute allowedRoles={['owner']}><OwnerDashboard /></PrivateRoute>} />
-        <Route index element={<Navigate to="/dashboard/redirect" replace />} />
+        <Route index element={<DashboardRedirect />} />
       </Route>
 
       <Route path="/feedback/:appointmentId" element={
         <PrivateRoute allowedRoles={['client']}><Feedback /></PrivateRoute>
       } />
 
-      <Route path="/dashboard/redirect" element={<PrivateRoute><DashboardRedirect /></PrivateRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
@@ -67,8 +66,9 @@ function App() {
 
 function DashboardRedirect() {
   const { user } = useAuth();
-  const path = user?.role === 'client' ? 'client' : user?.role === 'employee' ? 'employee' : 'owner';
-  return <Navigate to={`/dashboard/${path}`} replace />;
+  if (!user) return <Navigate to="/login" replace />;
+  const path = user.role === 'client' ? 'client' : user.role === 'employee' ? 'employee' : 'owner';
+  return <Navigate to={path} replace />; // Relative navigation to dashboard/path
 }
 
 export default App;

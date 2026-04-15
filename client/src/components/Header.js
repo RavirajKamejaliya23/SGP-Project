@@ -83,10 +83,12 @@ export default function Header() {
           {user ? (
             <>
               <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="btn btn-primary">Dashboard</Link>
+              <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="btn btn-outline">Toggle Theme</button>
               <button onClick={handleLogout} className="btn btn-outline">Logout</button>
             </>
           ) : (
             <>
+              <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="btn btn-outline">Toggle Theme</button>
               <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
               <Link to="/register" onClick={() => setMenuOpen(false)} className="btn btn-primary">Register</Link>
             </>

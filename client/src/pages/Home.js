@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
+import { useAuth } from '../context/AuthContext';
 
 export default function Home() {
+  const { user } = useAuth();
   const [services, setServices] = useState([]);
   const [offers] = useState([
     { title: '20% off on first visit', code: 'WELCOME20' },
@@ -28,9 +30,15 @@ export default function Home() {
             <Link to="/services" className="btn btn-primary" style={{ padding: '0.75rem 1.5rem', fontSize: '1rem' }}>
               Book Appointment
             </Link>
-            <Link to="/login" className="btn btn-outline" style={{ padding: '0.75rem 1.5rem', fontSize: '1rem' }}>
-              Login / Register
-            </Link>
+            {user ? (
+              <Link to="/dashboard" className="btn btn-outline" style={{ padding: '0.75rem 1.5rem', fontSize: '1rem' }}>
+                Go to Dashboard
+              </Link>
+            ) : (
+              <Link to="/login" className="btn btn-outline" style={{ padding: '0.75rem 1.5rem', fontSize: '1rem' }}>
+                Login / Register
+              </Link>
+            )}
           </div>
         </div>
       </section>

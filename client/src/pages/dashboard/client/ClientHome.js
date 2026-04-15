@@ -5,9 +5,13 @@ import { formatCurrency, formatDate } from '../../../utils/format';
 
 export default function ClientHome() {
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/api/appointments').then(res => setAppointments(res.data.slice(0, 5)));
+    api.get(`/api/appointments?t=${Date.now()}`).then(res => {
+      setAppointments(res.data.slice(0, 5));
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }, []);
 
   return (
@@ -21,7 +25,9 @@ export default function ClientHome() {
       </div>
 
       <h2 style={{ fontSize: '1.15rem', marginBottom: '0.75rem' }}>Recent appointments</h2>
-      {appointments.length === 0 ? (
+      {loading ? (
+        <p style={{ color: 'var(--text-secondary)' }}>Loading appointments...</p>
+      ) : appointments.length === 0 ? (
         <p style={{ color: 'var(--text-secondary)' }}>No appointments yet. <Link to="/dashboard/client/book">Book one</Link>.</p>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>

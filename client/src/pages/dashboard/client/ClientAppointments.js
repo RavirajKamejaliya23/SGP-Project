@@ -5,6 +5,7 @@ import { useSocket } from '../../../hooks/useSocket';
 
 export default function ClientAppointments() {
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [editingFeedback, setEditingFeedback] = useState(null);
   const [rating, setRating] = useState(5);
   const [feedback, setFeedback] = useState('');
@@ -12,7 +13,10 @@ export default function ClientAppointments() {
   useSocket('appointment-update', () => fetchAppointments());
 
   function fetchAppointments() {
-    api.get('/api/appointments').then(res => setAppointments(res.data));
+    api.get(`/api/appointments?t=${Date.now()}`).then(res => {
+      setAppointments(res.data);
+      setLoading(false);
+    }).catch(() => setLoading(false));
   }
 
   useEffect(() => {
@@ -61,6 +65,11 @@ export default function ClientAppointments() {
       <h1 style={{ fontFamily: 'Playfair Display', marginBottom: '0.5rem' }}>Appointments</h1>
       <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>History, cancel, reschedule, and feedback</p>
 
+      {loading ? (
+        <p style={{ color: 'var(--text-secondary)' }}>Loading appointments...</p>
+      ) : appointments.length === 0 ? (
+        <p style={{ color: 'var(--text-secondary)' }}>No appointments found.</p>
+      ) : (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {appointments.map(apt => (
           <div key={apt._id} className="card">
@@ -117,6 +126,7 @@ export default function ClientAppointments() {
           </div>
         ))}
       </div>
+      )}
     </>
   );
 }

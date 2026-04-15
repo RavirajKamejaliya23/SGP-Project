@@ -183,7 +183,7 @@ select option {
     display: none;
     width: 100%;
     order: 3;
-    padding: 1rem 0 !important;
+    padding: 0.5rem 0 1rem 0 !important;
   }
   
   .dashboard-aside.menu-open nav {
@@ -195,11 +195,21 @@ select option {
     display: none;
     width: 100%;
     order: 4;
+    padding: 0 0 1rem 0;
+    gap: 0.5rem;
   }
 
   .dashboard-aside.menu-open .bottom-actions {
     display: flex;
     flex-direction: row !important;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .dashboard-aside .bottom-actions .flex-btn {
+    flex: 1;
+    min-width: 100px;
   }
 
   /* Hamburger logic */
@@ -210,6 +220,23 @@ select option {
     font-size: 1.5rem;
     color: var(--text-primary);
   }
+}
+
+/* Sidebar Default Styling */
+.bottom-actions {
+  margin-top: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.notification-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.flex-btn {
+  width: 100%;
 }
 
 .mobile-toggle {
